@@ -1,0 +1,258 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title - PetBuddy</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #f5f5f5;
+        }
+
+        a {
+            text-decoration: none;
+            color: #000;
+            cursor: pointer;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: #fff;
+            padding: 18px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: #22b3e3;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav a {
+            margin: 0 18px;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        .nav a:hover {
+            color: #22b3e3;
+        }
+
+        /* ===== DROPDOWN CHO MÈO / CHO CHÓ ===== */
+        .menu-item {
+            position: relative;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 100%;            /* 🔑 dính sát menu */
+            left: 0;
+            background: #fff;
+            min-width: 260px;
+            border: 1px solid #eee;
+            box-shadow: 0 8px 20px rgba(0,0,0,.15);
+            display: none;
+            z-index: 1000;
+        }
+
+        .menu-item:hover .dropdown {
+            display: block;       /* 🔑 không bị mất khi rê chuột */
+        }
+
+        .dropdown a {
+            display: block;
+            padding: 12px 15px;
+            font-size: 14px;
+            border-bottom: 1px solid #f2f2f2;
+            text-transform: none;
+        }
+
+        .dropdown a:hover {
+            background: #f7f7f7;
+            color: #22b3e3;
+        }
+
+        /* ===== RIGHT ICON ===== */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .nav-right a {
+            margin-left: 18px;
+            font-size: 20px;
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -6px;
+            right: -10px;
+            background: #000;
+            color: #fff;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 50%;
+        }
+
+        /* ===== USER DROPDOWN LOGIN ===== */
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 340px;
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 10px 25px rgba(0,0,0,.2);
+            padding: 20px;
+            display: none;
+            z-index: 2000;
+        }
+
+        .user-dropdown.active {
+            display: block;       /* 🔑 xổ xuống */
+        }
+
+        /* ===== CONTENT ===== */
+        .container {
+            min-height: 80vh;
+            background: #fff;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            text-align: center;
+            padding: 15px;
+            background: #fff;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="header">
+
+    <!-- LOGO -->
+    <div class="logo">
+        Pet<span>Buddy</span>
+    </div>
+
+    <!-- MENU -->
+    <nav class="nav">
+
+        <div class="menu-item">
+            <a>Cho mèo ▾</a>
+            <div class="dropdown">
+                <a href="#">Thức ăn</a>
+                <a href="#">Chăm sóc sức khỏe</a>
+                <a href="#">Vệ sinh</a>
+                <a href="#">Phụ kiện - Đồ chơi</a>
+                <a href="#">Quần áo</a>
+                <a href="#">Pet Tech</a>
+            </div>
+        </div>
+
+        <div class="menu-item">
+            <a>Cho chó ▾</a>
+            <div class="dropdown">
+                <a href="#">Thức ăn</a>
+                <a href="#">Chăm sóc sức khỏe</a>
+                <a href="#">Vệ sinh</a>
+                <a href="#">Phụ kiện - Đồ chơi</a>
+                <a href="#">Quần áo</a>
+                <a href="#">Pet Tech</a>
+            </div>
+        </div>
+
+        @Html.ActionLink("Services", "Index", "Spa")
+        @Html.ActionLink("News", "Index", "News")
+    </nav>
+
+    <!-- ICON RIGHT -->
+    <div class="nav-right">
+
+        <a href="@Url.Action("Search", "Home")">🔍</a>
+
+        <a href="@Url.Action("Index", "Cart")">
+            🛒
+            <span class="cart-count">@((Session["CartCount"] ?? 0))</span>
+        </a>
+
+        @if (Session["MaTaiKhoan"] == null)
+        {
+            <a id="userIcon">👤</a>
+
+            <!-- LOGIN / FORGOT DROPDOWN -->
+            <div class="user-dropdown" id="userBox">
+
+                <div id="form-login">
+                    @Html.Partial("~/Views/Account/Login.cshtml")
+                </div>
+
+                <div id="form-forgot" style="display:none">
+                    @Html.Partial("~/Views/Account/ForgotPassword.cshtml")
+                </div>
+
+            </div>
+        }
+        else
+        {
+            <span>@Session["HoTen"]</span>
+            <a href="@Url.Action("Logout", "Account")">⎋</a>
+        }
+    </div>
+
+</header>
+
+<div class="container">
+    @RenderBody()
+</div>
+
+<footer class="footer">
+    © 2026 PetBuddy – Đồ án MVC
+</footer>
+
+<script>
+    const userIcon = document.getElementById("userIcon");
+    const userBox = document.getElementById("userBox");
+
+    if (userIcon) {
+        userIcon.addEventListener("click", function (e) {
+            e.stopPropagation();
+            userBox.classList.toggle("active");
+        });
+    }
+
+    document.addEventListener("click", function () {
+        if (userBox) userBox.classList.remove("active");
+    });
+
+    // 🔑 chuyển giữa Đăng nhập <-> Quên mật khẩu
+    function showForm(type) {
+        document.getElementById("form-login").style.display = "none";
+        document.getElementById("form-forgot").style.display = "none";
+        document.getElementById("form-" + type).style.display = "block";
+    }
+</script>
+
+</body>
+</html>
