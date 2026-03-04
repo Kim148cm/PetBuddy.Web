@@ -460,35 +460,38 @@
     </div>
 </div>
 <!-- ===== SAN PHAM BAN CHAY====  -->
-<section class="best-selling">
-    <h2>Sản Phẩm Bán Chạy | <span>Best Sellings</span></h2>
-    <div class="line"></div>
+<div class="best-list">
 
-    <div style="position:relative">
-        <div class="best-arrow left">&#10094;</div>
-        <div class="best-arrow right">&#10095;</div>
-
-        <div class="best-list">
-            <div class="best-item">
-                <img src="~/Content/anh/pateking.jpg" />
-                <p>Pate lon King’s Pet cho mèo hỗn hợp cá 380g</p>
-                <b>65,000đ</b>
-            </div>
-
-            <div class="best-item">
-                <img src="~/Content/anh/khayandoi.jpg" />
-                <p>Khay ăn đôi đế cao xanh</p>
-                <b>580,000đ</b>
-            </div>
-
-            <div class="best-item">
-                <img src="~/Content/anh/tuidungthucung.jpg" />
-                <p>Túi địu lưới đeo chéo</p>
-                <b>450,000đ</b>
-            </div>
-        </div>
+    <!-- THỨC ĂN MÈO -->
+    <div class="best-item">
+        <a href="@Url.Action("SanPham","DanhMuc", new { loai = "ThucAnMeo" })"
+           style="text-decoration:none; color:inherit;">
+            <img src="~/Content/anh/pateking.jpg" />
+            <p>Pate lon King’s Pet cho mèo hỗn hợp cá 380g</p>
+            <b>65,000đ</b>
+        </a>
     </div>
-</section>
+
+    <!-- PHỤ KIỆN -->
+    <div class="best-item">
+        <a href="@Url.Action("SanPham","DanhMuc", new { loai = "PhuKien" })"
+           style="text-decoration:none; color:inherit;">
+            <img src="~/Content/anh/khayandoi.jpg" />
+            <p>Khay ăn đôi đế cao xanh</p>
+            <b>580,000đ</b>
+        </a>
+    </div>
+
+    <div class="best-item">
+        <a href="@Url.Action("SanPham","DanhMuc", new { loai = "PhuKien" })"
+           style="text-decoration:none; color:inherit;">
+            <img src="~/Content/anh/tuidungthucung.jpg" />
+            <p>Túi địu lưới đeo chéo</p>
+            <b>450,000đ</b>
+        </a>
+    </div>
+
+</div>
 
 <!-- ===== NEWS ===== -->
 <div class="news-section">
