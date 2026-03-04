@@ -275,7 +275,7 @@
     /* ===== NEWSLETTER BACKGROUND ===== */
     .newsletter {
         position: relative;
-        background-image: url('/Content/anh/newsletter-bg.jpg'); /* đổi đúng tên ảnh của bạn */
+        background-image: url('/Content/anh/chomeo.jpg'); /* đổi đúng tên ảnh của bạn */
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -340,8 +340,72 @@
             .newsletter-form button:hover {
                 background: #e96c00;
             }
+    /* ===== FOOTER ===== */
+    .footer {
+        background: linear-gradient(180deg, #2b1b12, #000);
+        color: #ddd;
+        font-size: 14px;
+    }
 
+    .footer-container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 60px 20px;
+        display: grid;
+        grid-template-columns: 2fr 2fr 1fr 1fr;
+        gap: 40px;
+    }
+
+    .footer-col h3 {
+        color: #fff;
+        font-size: 16px;
+        margin-bottom: 18px;
+    }
+
+    .footer-col p {
+        margin-bottom: 10px;
+        line-height: 1.6;
+    }
+
+    .footer-col ul {
+        list-style: none;
+        padding: 0;
+    }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
         }
+
+            .footer-col ul li a {
+                color: #ccc;
+                text-decoration: none;
+                transition: .3s;
+            }
+
+                .footer-col ul li a:hover {
+                    color: #ffb347;
+                }
+
+    .footer-cert img {
+        max-width: 180px;
+        margin-top: 20px;
+    }
+
+    .footer-pay img {
+        max-width: 160px;
+        margin-top: 15px;
+    }
+
+    /* bottom */
+    .footer-bottom {
+        border-top: 1px solid #333;
+        text-align: center;
+        padding: 15px;
+        font-size: 13px;
+        color: #aaa;
+    }
+
+    
 </style>
 
 <!-- ===== HERO ===== -->
@@ -455,10 +519,66 @@
 <div class="newsletter">
     <div class="newsletter-content">
         <h2>ĐĂNG KÝ | NEWSLETTER</h2>
-        <p>Nhận ưu đãi & tin mới từ PetBuddy</p>
+        <p>Nhận ưu đãi & tin mới từ PetHub</p>
         <form class="newsletter-form">
             <input type="email" placeholder="Nhập email của bạn" />
             <button>GỬI</button>
         </form>
     </div>
 </div>
+<!-- ===== FOOTER ===== -->
+<footer class="footer">
+    <div class="footer-container">
+
+        <!-- CỘT 1 -->
+        <div class="footer-col">
+            <h3>LIÊN HỆ</h3>
+            <p><b>Địa chỉ:</b> Ấp Thới Thuận A, Xã Thới Lai, TP Cần Thơ</p>
+            <p><b>Điện thoại:</b> 0796947666</p>
+            <p><b>Email:</b> petvnhome@gmail.com</p>
+        </div>
+
+        <!-- CỘT 2 -->
+        <div class="footer-col">
+            <h3>VỀ PETHUB</h3>
+            <p>
+                Hệ thống cửa hàng chuyên cung cấp các mặt hàng và dịch vụ chăm sóc thú cưng.
+                Với tiêu chí uy tín và chất lượng tốt nhất cho các bạn thú cưng,
+                PetHub cam kết mang đến trải nghiệm tốt nhất cho khách hàng.
+            </p>
+        </div>
+
+        <!-- CỘT 3 -->
+        <div class="footer-col">
+            <h3>DANH MỤC</h3>
+            <ul>
+                <li><a href="#">Trang chủ</a></li>
+                <li><a href="#">Khuyến mãi</a></li>
+                <li><a href="#">Dịch vụ</a></li>
+                <li><a href="#">Chăm sóc</a></li>
+                <li><a href="#">Tin tức</a></li>
+                <li><a href="#">Liên hệ</a></li>
+            </ul>
+        </div>
+
+        <!-- CỘT 4 -->
+        <div class="footer-col">
+            <h3>CHÍNH SÁCH</h3>
+            <ul>
+                <li><a href="#">Chính sách đổi trả</a></li>
+                <li><a href="#">Vận chuyển & giao nhận</a></li>
+                <li><a href="#">Bảo mật thông tin</a></li>
+                <li><a href="#">Hình thức thanh toán</a></li>
+            </ul>
+
+            <div class="footer-cert">
+                <img src="~/Content/anh/bocongthuong.png" alt="Đã thông báo bộ công thương">
+            </div>
+
+            <div class="footer-pay">
+                <img src="~/Content/anh/pay.png" alt="Thanh toán">
+            </div>
+        </div>
+
+    </div>
+</footer>

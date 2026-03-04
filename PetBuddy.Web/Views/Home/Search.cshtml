@@ -1,0 +1,26 @@
+﻿@model IEnumerable<PetBuddy.Web.Models.SanPham>
+
+@{
+    ViewBag.Title = "Kết quả tìm kiếm";
+}
+
+<h2>Kết quả tìm kiếm cho: "@ViewBag.Keyword"</h2>
+
+@if (!Model.Any())
+{
+    <p>Không tìm thấy sản phẩm nào.</p>
+}
+else
+{
+    <div style="display:flex; flex-wrap:wrap;">
+        @foreach (var item in Model)
+        {
+            <div style="width:220px; margin:15px; border:1px solid #eee; padding:15px;">
+                <h4>@item.TenSanPham</h4>
+                <p>Giá: <b>@item.Gia.ToString("N0") đ</b></p>
+                <p>Số lượng: @item.SoLuong</p>
+                <p>@item.MoTa</p>
+            </div>
+        }
+    </div>
+}

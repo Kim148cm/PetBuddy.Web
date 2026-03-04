@@ -1,0 +1,153 @@
+﻿@model List<PetBuddy.Web.Models.SanPham>
+
+@{
+    ViewBag.Title = "Thức ăn cho mèo";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+
+<style>
+    .category-banner {
+        position: relative;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+        .category-banner img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            filter: brightness(60%);
+        }
+
+    .banner-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50px;
+        transform: translateY(-50%);
+        color: #fff;
+    }
+
+        .banner-overlay h2 {
+            font-size: 40px;
+            font-weight: 700;
+        }
+
+        .banner-overlay p {
+            font-size: 18px;
+        }
+
+    .product-card {
+        transition: 0.3s ease;
+    }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+    .product-img {
+        height: 220px;
+        object-fit: cover;
+    }
+
+    .price {
+        color: #22b3e3;
+        font-weight: 700;
+    }
+
+    .out-stock {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: red;
+        color: #fff;
+        font-size: 12px;
+        padding: 4px 8px;
+        border-radius: 4px;
+    }
+</style>
+<!-- ================= BANNER ================= -->
+
+<div class="container mt-4">
+    <div class="category-banner">
+        <img src="~/Content/images/banner-meo.jpg" alt="Thức ăn cho mèo" />
+        <div class="banner-overlay">
+            <h2>Thức ăn dinh dưỡng cho mèo</h2>
+            <p>Đảm bảo sức khỏe & phát triển toàn diện</p>
+        </div>
+    </div>
+</div>
+
+<!-- ================= MAIN CONTENT ================= -->
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- SIDEBAR -->
+        <div class="col-md-3 sidebar">
+            <h6><b>THƯƠNG HIỆU | BRAND</b></h6>
+            <div>
+                <div><input type="checkbox" /> Royal Canin</div>
+                <div><input type="checkbox" /> Whiskas</div>
+                <div><input type="checkbox" /> Nekko</div>
+                <div><input type="checkbox" /> KitCat</div>
+            </div>
+
+            <hr />
+
+            <h6><b>GIÁ SẢN PHẨM | PRICE</b></h6>
+            <div>
+                <div><input type="checkbox" /> Dưới 50,000đ</div>
+                <div><input type="checkbox" /> 50,000đ - 100,000đ</div>
+                <div><input type="checkbox" /> Trên 100,000đ</div>
+            </div>
+        </div>
+
+        <!-- PRODUCT LIST -->
+        <div class="col-md-9">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3>Thức ăn cho mèo</h3>
+
+                <select class="form-select w-auto">
+                    <option>Bán chạy nhất</option>
+                    <option>Giá thấp đến cao</option>
+                    <option>Giá cao đến thấp</option>
+                </select>
+            </div>
+
+            <div class="row">
+
+                @foreach (var sp in Model)
+                {
+                    <div class="col-md-3 mb-4">
+                        <div class="card product-card position-relative h-100">
+
+                            @if (sp.SoLuong == 0)
+                            {
+                                <div class="out-stock">Hết hàng</div>
+                            }
+
+                            <img src="~/Content/images/default.png"
+                                 class="card-img-top product-img"
+                                 alt="@sp.TenSanPham" />
+
+                            <div class="card-body text-center">
+                                <h6>@sp.TenSanPham</h6>
+                                <p class="price">
+                                    @String.Format("{0:N0}", sp.Gia) đ
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

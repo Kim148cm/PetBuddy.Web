@@ -1,0 +1,16 @@
+﻿@model PetBuddy.Web.Models.SanPham
+
+<h2>SỬA SẢN PHẨM</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(m => m.MaSanPham)
+
+    <p>Tên: @Html.TextBoxFor(m => m.TenSanPham)</p>
+    <p>Giá: @Html.TextBoxFor(m => m.Gia)</p>
+    <p>Số lượng: @Html.TextBoxFor(m => m.SoLuong)</p>
+    <p>Mô tả: @Html.TextBoxFor(m => m.MoTa)</p>
+    <p>Mã danh mục: @Html.TextBoxFor(m => m.MaDanhMuc)</p>
+
+    <button type="submit">Lưu</button>
+}

@@ -117,22 +117,31 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AdminAuthorizeAttribute.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ChatController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\SpaController.cs" />
+    <Compile Include="Controllers\SanPhamController.cs" />
+    <Compile Include="Controllers\ThongKeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\TaiKhoan.cs" />
+    <Compile Include="Models\GioHangItemViewModel.cs" />
+    <Compile Include="Models\ForgotPasswordViewModel.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
+    <Compile Include="Models\RegisterViewModel.cs" />
+    <Compile Include="Models\SanPham.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\anh\balovanchuyen.jpg" />
     <Content Include="Content\anh\banner_s35.jpg" />
+    <Content Include="Content\anh\bocongthuong.png" />
+    <Content Include="Content\anh\chomeo.jpg" />
     <Content Include="Content\anh\demphunnuoc.jpg" />
     <Content Include="Content\anh\gaubonggam.jpg" />
     <Content Include="Content\anh\khayandoi.jpg" />
@@ -140,6 +149,7 @@
     <Content Include="Content\anh\new2.jpeg" />
     <Content Include="Content\anh\new3.jpg" />
     <Content Include="Content\anh\pateking.jpg" />
+    <Content Include="Content\anh\pay.png" />
     <Content Include="Content\anh\spathucung.jpeg" />
     <Content Include="Content\anh\tialong.jpg" />
     <Content Include="Content\anh\tuidungthucung.jpg" />
@@ -194,10 +204,18 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Spa\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Cart\Index.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Create.cshtml" />
+    <Content Include="Views\Admin\Edit.cshtml" />
+    <Content Include="Views\Shared\_AdminLayout.cshtml" />
+    <Content Include="Views\ThongKe\Index.cshtml" />
+    <Content Include="Views\SanPham\DanhMuc.cshtml" />
+    <Content Include="Views\SanPham\ThucAnMeo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

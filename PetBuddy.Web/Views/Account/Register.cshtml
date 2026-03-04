@@ -1,13 +1,159 @@
-﻿@{
-    ViewBag.Title = "Tạo tài khoản";
+﻿@model PetBuddy.Web.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Đăng ký";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Tạo tài khoản</h2>
+<style>
+    .auth-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 60px 20px 80px 20px;
+        background: #ff7a1a;
+        min-height: 80vh;
+    }
 
-<input placeholder="Họ" />
-<input placeholder="Tên" />
-<input placeholder="Email" />
-<input placeholder="Mật khẩu" />
+    .auth-box {
+        width: 100%;
+        max-width: 950px;
+        background: #fff;
+        border-radius: 20px;
+        overflow: hidden;
+        display: flex;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
 
-<button>ĐĂNG KÝ</button>
+    .auth-left {
+        width: 50%;
+        background: linear-gradient(135deg, #ff7a1a, #ff5e00);
+        color: #fff;
+        padding: 60px 50px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+        .auth-left h1 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .auth-left p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+    .auth-right {
+        width: 50%;
+        padding: 60px 50px;
+        background: #f9f9f9;
+    }
+
+        .auth-right h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 26px;
+            font-weight: 700;
+        }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        margin-top: 6px;
+        font-size: 14px;
+    }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #ff7a1a;
+        }
+
+    .btn-auth {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        background: #ff6a00;
+        color: #fff;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+        .btn-auth:hover {
+            background: #e65c00;
+        }
+
+    .text-center {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 14px;
+    }
+
+        .text-center a {
+            color: #ff6a00;
+            font-weight: 600;
+        }
+
+    .error {
+        background: #ffe0e0;
+        color: red;
+        padding: 10px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+    }
+</style>
+
+<div class="auth-wrapper">
+    <div class="auth-box">
+
+        <div class="auth-left">
+            <h1>PetBuddy</h1>
+            <p>Tạo tài khoản để sử dụng đầy đủ các dịch vụ chăm sóc thú cưng.</p>
+        </div>
+
+        <div class="auth-right">
+            <h2>Đăng ký</h2>
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="error">
+                    @Html.ValidationSummary()
+                </div>
+            }
+
+            @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.HoTen, new { @class = "form-control", placeholder = "Họ tên" })
+                </div>
+
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+                </div>
+
+                <div class="form-group">
+                    @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", placeholder = "Mật khẩu" })
+                </div>
+
+                <button type="submit" class="btn-auth">ĐĂNG KÝ</button>
+
+                <div class="text-center">
+                    Đã có tài khoản?
+                    <a href="@Url.Action("Login","Account")">Đăng nhập</a>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>

@@ -1,32 +1,62 @@
-﻿using System.Web.Mvc;
+﻿using PetBuddy.Web.Models;
+using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Web.Mvc;
 
-namespace PetBuddy.Controllers
+namespace PetBuddy.Web.Controllers
 {
     public class AccountController : Controller
     {
+        string connectionString = @"Server=ThienKim;Database=PetBuddy;Trusted_Connection=True;";
+
         // ================= LOGIN =================
         public ActionResult Login()
         {
-            // GHI CHÚ:
-            // Trả về Views/Account/Login.cshtml
             return View();
         }
-
         [HttpPost]
-        public ActionResult Login(string email, string password)
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LoginViewModel model)
         {
-            // GHI CHÚ:
-            // Demo: giả lập đăng nhập thành công
-            if (email == "admin@gmail.com" && password == "123")
+            if (string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.MatKhau))
             {
-                Session["MaTaiKhoan"] = 1;
-                Session["HoTen"] = "Admin";
+                ViewBag.Error = "Vui lòng nhập đầy đủ thông tin";
+                return View(model);
+            }
 
-                return RedirectToAction("Index", "Home");
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                string query = @"
+        SELECT nd.MaNguoiDung, vt.TenVaiTro
+        FROM NguoiDung nd
+        INNER JOIN VaiTro vt ON nd.MaVaiTro = vt.MaVaiTro
+        WHERE nd.Email = @Email 
+        AND nd.MatKhau = @MatKhau
+        AND nd.TrangThai = 1";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Email", model.Email.Trim());
+                cmd.Parameters.AddWithValue("@MatKhau", model.MatKhau.Trim());
+
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    Session["UserId"] = reader["MaNguoiDung"];
+                    Session["Role"] = reader["TenVaiTro"].ToString();
+
+                    if (Session["Role"].ToString().Equals("Admin", StringComparison.OrdinalIgnoreCase))
+                        return RedirectToAction("Index", "Admin");
+                    else
+                        return RedirectToAction("Index", "Home");
+                }
             }
 
             ViewBag.Error = "Sai email hoặc mật khẩu";
-            return View();
+            return View(model);
         }
 
         // ================= REGISTER =================
@@ -36,33 +66,63 @@ namespace PetBuddy.Controllers
         }
 
         [HttpPost]
-        public ActionResult Register(string ho, string ten, string email, string password)
+        public ActionResult Register(RegisterViewModel model)
         {
-            // GHI CHÚ:
-            // Sau khi đăng ký → quay về Login
+            if (!ModelState.IsValid)
+                return View(model);
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                // Kiểm tra email tồn tại
+                string checkQuery = "SELECT COUNT(*) FROM NguoiDung WHERE Email = @Email";
+                SqlCommand checkCmd = new SqlCommand(checkQuery, conn);
+                checkCmd.Parameters.AddWithValue("@Email", model.Email);
+
+                int count = (int)checkCmd.ExecuteScalar();
+                if (count > 0)
+                {
+                    ModelState.AddModelError("", "Email đã tồn tại!");
+                    return View(model);
+                }
+
+                // Lấy MaVaiTro của KhachHang
+                string roleQuery = "SELECT MaVaiTro FROM VaiTro WHERE TenVaiTro='KhachHang'";
+                SqlCommand roleCmd = new SqlCommand(roleQuery, conn);
+                object result = roleCmd.ExecuteScalar();
+
+                if (result == null)
+                {
+                    ModelState.AddModelError("", "Chưa có vai trò KhachHang trong DB!");
+                    return View(model);
+                }
+
+                int roleId = Convert.ToInt32(result);
+
+                string insertQuery = @"INSERT INTO NguoiDung
+                    (HoTen, Email, MatKhau, MaVaiTro, TrangThai)
+                    VALUES
+                    (@HoTen, @Email, @MatKhau, @MaVaiTro, 1)";
+
+                SqlCommand cmd = new SqlCommand(insertQuery, conn);
+                cmd.Parameters.AddWithValue("@HoTen", model.HoTen);
+                cmd.Parameters.AddWithValue("@Email", model.Email);
+                cmd.Parameters.AddWithValue("@MatKhau", model.MatKhau);
+                cmd.Parameters.AddWithValue("@MaVaiTro", roleId);
+
+                cmd.ExecuteNonQuery();
+            }
+
             return RedirectToAction("Login");
-        }
-
-        // ================= FORGOT PASSWORD =================
-        public ActionResult ForgotPassword()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult ForgotPassword(string email)
-        {
-            // GHI CHÚ:
-            // Demo gửi mail
-            ViewBag.Message = "Đã gửi email khôi phục mật khẩu!";
-            return View();
         }
 
         // ================= LOGOUT =================
         public ActionResult Logout()
         {
             Session.Clear();
-            return RedirectToAction("Login");
+            Session.Abandon();
+            return RedirectToAction("Login", "Account");
         }
     }
 }

@@ -1,0 +1,116 @@
+﻿@model List<PetBuddy.Web.Models.SanPham>
+
+@{
+    ViewBag.Title = "Thức Ăn Cho Mèo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .page-banner {
+        height: 260px;
+        background-image: url("/Content/anh/anh-banner-meo-nho.jpg");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    .shop-container {
+        display: flex;
+        padding: 60px 80px;
+        gap: 40px;
+        background: #f9f9f9;
+    }
+
+    .sidebar {
+        width: 250px;
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+    }
+
+        .sidebar h3 {
+            margin-bottom: 20px;
+        }
+
+        .sidebar label {
+            display: block;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+
+    .product-area {
+        flex: 1;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+    }
+
+    .product-card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        transition: 0.3s;
+    }
+
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .product-card h3 {
+            margin: 15px 0;
+        }
+
+        .product-card p {
+            color: #22b3e3;
+            font-weight: bold;
+        }
+
+        .product-card button {
+            margin-top: 10px;
+            padding: 8px 15px;
+            border: none;
+            background: #22b3e3;
+            color: white;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+</style>
+
+<div class="page-banner">
+
+</div>
+
+<div class="shop-container">
+
+    <aside class="sidebar">
+        <h3>Nhà Cung Cấp</h3>
+        <label><input type="checkbox" /> Royal Canin</label>
+        <label><input type="checkbox" /> Whiskas</label>
+        <label><input type="checkbox" /> Me-O</label>
+        <label><input type="checkbox" /> Cat's Eye</label>
+    </aside>
+
+    <div class="product-area">
+
+        @foreach (var item in Model)
+        {
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1601758123927-196f6f74e1f9" />
+                <h3>@item.TenSanPham</h3>
+                <p>@String.Format("{0:N0}", item.Gia) đ</p>
+                <button>Thêm vào giỏ</button>
+            </div>
+        }
+
+    </div>
+
+</div>

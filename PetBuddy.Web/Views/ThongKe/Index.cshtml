@@ -1,0 +1,45 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2 class="mb-4">Thống kê</h2>
+
+<div class="row">
+
+    <div class="col-md-6 mb-4">
+        <div class="card text-white bg-success">
+            <div class="card-body">
+                <h5>Doanh thu 7 ngày</h5>
+                <h3>@ViewBag.DoanhThuTuan.ToString("N0") đ</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5>Doanh thu 30 ngày</h5>
+                <h3>@ViewBag.DoanhThuThang.ToString("N0") đ</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5>Sản phẩm bán (7 ngày)</h5>
+                <h3>@ViewBag.SPTuan</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card text-white bg-danger">
+            <div class="card-body">
+                <h5>Sản phẩm bán (30 ngày)</h5>
+                <h3>@ViewBag.SPThang</h3>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,32 @@
+﻿@model List<PetBuddy.Web.Models.GioHangItemViewModel>
+
+<h2>GIỎ HÀNG (@Model.Count sản phẩm)</h2>
+
+@if (!Model.Any())
+{
+    <div style="text-align:center; margin-top:50px;">
+        <h3>Your Cart Is Empty</h3>
+        <a href="/Home" class="btn btn-primary">TIẾP TỤC MUA SẮM</a>
+    </div>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>Tên</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.TenSanPham</td>
+                <td>@item.Gia</td>
+                <td>@item.SoLuong</td>
+                <td>@item.ThanhTien</td>
+            </tr>
+        }
+    </table>
+}

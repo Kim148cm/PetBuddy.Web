@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>@ViewBag.Title - PetBuddy</title>
+    <title>@ViewBag.Title - PetHub</title>
 
     <style>
         body {
@@ -20,90 +20,119 @@
         /* ===== HEADER ===== */
         .header {
             background: #fff;
-            padding: 18px 50px;
+            padding: 0 60px;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid #eee;
-            position: relative;
-            z-index: 100;
+            position: fixed; /* ĐỔI sticky -> fixed */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 99999; /* TĂNG LÊN CAO */
         }
 
         .logo {
             font-size: 28px;
             font-weight: 800;
+            line-height: 70px;
         }
 
-        .logo span {
-            color: #22b3e3;
-        }
+            .logo span {
+                color: #22b3e3;
+            }
 
+        /* ===== NAV ===== */
         .nav {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            gap: 40px;
+        }
+
+            .nav a {
+                font-weight: 600;
+                font-size: 14px;
+                text-transform: uppercase;
+                line-height: 70px;
+                display: inline-block;
+            }
+
+                .nav a:hover {
+                    color: #22b3e3;
+                }
+
+        /* ===== MENU ITEM ===== */
+        .menu-item {
+            position: relative;
+            height: 70px;
             display: flex;
             align-items: center;
         }
 
-        .nav a {
-            margin: 0 18px;
-            font-weight: 600;
-            font-size: 14px;
-            text-transform: uppercase;
-        }
+            .menu-item > a {
+                display: flex;
+                align-items: center;
+                height: 100%;
+                padding: 0 5px;
+            }
 
-        .nav a:hover {
-            color: #22b3e3;
-        }
-
-        /* ===== DROPDOWN CHO MÈO / CHO CHÓ ===== */
-        .menu-item {
-            position: relative;
-        }
-
+        /* ===== DROPDOWN ===== */
         .dropdown {
             position: absolute;
-            top: 100%;            /* 🔑 dính sát menu */
+            top: 70px;
             left: 0;
             background: #fff;
             min-width: 260px;
             border: 1px solid #eee;
-            box-shadow: 0 8px 20px rgba(0,0,0,.15);
-            display: none;
-            z-index: 1000;
+            box-shadow: 0 8px 20px rgba(0,0,0,.12);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.25s ease;
+            z-index: 100000; /* tăng cao hơn banner */
         }
 
         .menu-item:hover .dropdown {
-            display: block;       /* 🔑 không bị mất khi rê chuột */
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
         }
 
         .dropdown a {
             display: block;
-            padding: 12px 15px;
+            padding: 12px 18px;
             font-size: 14px;
             border-bottom: 1px solid #f2f2f2;
             text-transform: none;
+            line-height: normal;
         }
 
-        .dropdown a:hover {
-            background: #f7f7f7;
-            color: #22b3e3;
-        }
+            .dropdown a:hover {
+                background: #f7f7f7;
+                color: #22b3e3;
+            }
 
-        /* ===== RIGHT ICON ===== */
+        /* ===== NAV RIGHT ===== */
         .nav-right {
             display: flex;
             align-items: center;
-            position: relative;
+            height: 70px;
         }
 
-        .nav-right a {
-            margin-left: 18px;
-            font-size: 20px;
-            position: relative;
-        }
+            .nav-right a {
+                margin-left: 20px;
+                font-size: 20px;
+                position: relative;
+                display: flex;
+                align-items: center;
+                height: 100%;
+            }
 
         .cart-count {
             position: absolute;
-            top: -6px;
+            top: 18px;
             right: -10px;
             background: #000;
             color: #fff;
@@ -112,31 +141,43 @@
             border-radius: 50%;
         }
 
-        /* ===== USER DROPDOWN LOGIN ===== */
+        /* ===== USER DROPDOWN ===== */
         .user-dropdown {
             position: absolute;
-            top: 100%;
+            top: 70px;
             right: 0;
-            width: 340px;
+            width: 220px;
             background: #fff;
             border-radius: 6px;
-            box-shadow: 0 10px 25px rgba(0,0,0,.2);
-            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,.15);
             display: none;
             z-index: 2000;
+            padding: 10px 0;
         }
 
-        .user-dropdown.active {
-            display: block;       /* 🔑 xổ xuống */
-        }
+            .user-dropdown a {
+                display: block;
+                padding: 12px 20px;
+                font-size: 14px;
+                text-transform: none;
+            }
 
-        /* ===== CONTENT ===== */
+                .user-dropdown a:hover {
+                    background: #f5f5f5;
+                    color: #22b3e3;
+                }
+
+            .user-dropdown.active {
+                display: block;
+            }
+
+        /* ===== CONTAINER ===== */
         .container {
             min-height: 80vh;
             background: #fff;
+            padding-top: 70px; /* thêm dòng này */
         }
 
-        /* ===== FOOTER ===== */
         .footer {
             text-align: center;
             padding: 15px;
@@ -144,115 +185,185 @@
             border-top: 1px solid #eee;
             font-size: 14px;
         }
+
+        /* ===== BREADCRUMB ===== */
+        .breadcrumb {
+            padding: 15px 50px;
+            background: #f9f9f9;
+            font-size: 14px;
+        }
+
+            .breadcrumb a {
+                font-weight: 600;
+                color: #000;
+            }
+
+                .breadcrumb a:hover {
+                    color: #22b3e3;
+                }
+
+            .breadcrumb span {
+                margin-left: 5px;
+                color: #666;
+            }
+
+        /* ===== SEARCH ===== */
+        .search-wrapper {
+            position: relative;
+            margin-left: 20px;
+            font-size: 20px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-box {
+            position: absolute;
+            top: 70px;
+            right: 0;
+            width: 300px;
+            background: #fff;
+            padding: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,.15);
+            border-radius: 6px;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s ease;
+            z-index: 3000;
+        }
+
+        .search-wrapper:hover .search-box {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .search-box input {
+            width: 75%;
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .search-box button {
+            padding: 8px 10px;
+            background: #000;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 
 <body>
 
-<header class="header">
-
-    <!-- LOGO -->
-    <div class="logo">
-        Pet<span>Buddy</span>
-    </div>
-
-    <!-- MENU -->
-    <nav class="nav">
-
-        <div class="menu-item">
-            <a>Cho mèo ▾</a>
-            <div class="dropdown">
-                <a href="#">Thức ăn</a>
-                <a href="#">Chăm sóc sức khỏe</a>
-                <a href="#">Vệ sinh</a>
-                <a href="#">Phụ kiện - Đồ chơi</a>
-                <a href="#">Quần áo</a>
-                <a href="#">Pet Tech</a>
+    @* ===== HEADER (ẨN nếu cần) ===== *@
+    @if (ViewBag.HideHeader == null)
+    {
+        <header class="header">
+            <div class="logo">
+                Pet<span>Hub</span>
             </div>
-        </div>
 
-        <div class="menu-item">
-            <a>Cho chó ▾</a>
-            <div class="dropdown">
-                <a href="#">Thức ăn</a>
-                <a href="#">Chăm sóc sức khỏe</a>
-                <a href="#">Vệ sinh</a>
-                <a href="#">Phụ kiện - Đồ chơi</a>
-                <a href="#">Quần áo</a>
-                <a href="#">Pet Tech</a>
-            </div>
-        </div>
-
-        @Html.ActionLink("Services", "Index", "Spa")
-        @Html.ActionLink("News", "Index", "News")
-    </nav>
-
-    <!-- ICON RIGHT -->
-    <div class="nav-right">
-
-        <a href="@Url.Action("Search", "Home")">🔍</a>
-
-        <a href="@Url.Action("Index", "Cart")">
-            🛒
-            <span class="cart-count">@((Session["CartCount"] ?? 0))</span>
-        </a>
-
-        @if (Session["MaTaiKhoan"] == null)
-        {
-            <a id="userIcon">👤</a>
-
-            <!-- LOGIN / FORGOT DROPDOWN -->
-            <div class="user-dropdown" id="userBox">
-
-                <div id="form-login">
-                    @Html.Partial("~/Views/Account/Login.cshtml")
+            <nav class="nav">
+                <div class="menu-item">
+                    <a>Cho mèo ▾</a>
+                    <div class="dropdown">
+                        <a href="@Url.Action("ThucAnMeo", "SanPham")">Thức ăn</a>
+                        <a href="#">Chăm sóc sức khỏe</a>
+                        <a href="#">Vệ sinh</a>
+                        <a href="#">Phụ kiện - Đồ chơi</a>
+                        <a href="#">Quần áo</a>
+                        <a href="#">Pet Tech</a>
+                    </div>
                 </div>
 
-                <div id="form-forgot" style="display:none">
-                    @Html.Partial("~/Views/Account/ForgotPassword.cshtml")
+                <div class="menu-item">
+                    <a>Cho chó ▾</a>
+                    <div class="dropdown">
+                        <a href="#">Thức ăn</a>
+                        <a href="#">Chăm sóc sức khỏe</a>
+                        <a href="#">Vệ sinh</a>
+                        <a href="#">Phụ kiện - Đồ chơi</a>
+                        <a href="#">Quần áo</a>
+                        <a href="#">Pet Tech</a>
+                    </div>
                 </div>
 
+                @Html.ActionLink("Services", "Index", "Spa")
+                @Html.ActionLink("News", "Index", "News")
+            </nav>
+
+            <div class="nav-right">
+                <div class="search-wrapper">
+                    <span class="search-icon">🔍</span>
+
+                    <div class="search-box">
+                        <form method="get" action="@Url.Action("Search","Home")">
+                            <input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm..." />
+                            <button type="submit">🔍</button>
+                        </form>
+                    </div>
+                </div>
+
+
+                <a href="@Url.Action("Index", "Cart")">
+                    🛒
+                    <span class="cart-count">@((Session["CartCount"] ?? 0))</span>
+                </a>
+
+                @if (Session["MaTaiKhoan"] == null)
+                {
+                    <a id="userIcon">👤</a>
+                    <div class="user-dropdown" id="userBox">
+                        <a href="@Url.Action("Login", "Account")">Đăng nhập</a>
+                        <a href="@Url.Action("Register", "Account")">Đăng ký</a>
+                    </div>
+                }
+                else
+                {
+                    <span style="margin-left:15px;">@Session["HoTen"]</span>
+                    <a href="@Url.Action("Logout", "Account")">⎋</a>
+                }
             </div>
-        }
-        else
-        {
-            <span>@Session["HoTen"]</span>
-            <a href="@Url.Action("Logout", "Account")">⎋</a>
-        }
+        </header>
+    }
+
+    <div class="container">
+
+        @* ===== BREADCRUMB (LUÔN HIỆN) ===== *@
+        <div class="breadcrumb">
+            <a href="@Url.Action("Index", "Home")">Trang chủ</a>
+            @if (ViewBag.Title != null)
+            {
+                <span> > @ViewBag.Title</span>
+            }
+        </div>
+
+        @RenderBody()
     </div>
 
-</header>
+    @* ===== FOOTER (ẨN nếu cần) ===== *@
+    @if (ViewBag.HideHeader == null)
+    {
+        <footer class="footer">
+            © 2026 PetHub – PhuKienThuCung
+        </footer>
+    }
 
-<div class="container">
-    @RenderBody()
-</div>
+    <script>
+        const userIcon = document.getElementById("userIcon");
+        const userBox = document.getElementById("userBox");
 
-<footer class="footer">
-    © 2026 PetBuddy – Đồ án MVC
-</footer>
+        if (userIcon) {
+            userIcon.addEventListener("click", function (e) {
+                e.stopPropagation();
+                userBox.classList.toggle("active");
+            });
+        }
 
-<script>
-    const userIcon = document.getElementById("userIcon");
-    const userBox = document.getElementById("userBox");
-
-    if (userIcon) {
-        userIcon.addEventListener("click", function (e) {
-            e.stopPropagation();
-            userBox.classList.toggle("active");
+        document.addEventListener("click", function () {
+            if (userBox) userBox.classList.remove("active");
         });
-    }
-
-    document.addEventListener("click", function () {
-        if (userBox) userBox.classList.remove("active");
-    });
-
-    // 🔑 chuyển giữa Đăng nhập <-> Quên mật khẩu
-    function showForm(type) {
-        document.getElementById("form-login").style.display = "none";
-        document.getElementById("form-forgot").style.display = "none";
-        document.getElementById("form-" + type).style.display = "block";
-    }
-</script>
+    </script>
 
 </body>
 </html>

@@ -1,0 +1,40 @@
+﻿@model List<PetBuddy.Web.Models.SanPham>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<h2>QUẢN LÝ SẢN PHẨM</h2>
+
+@using (Html.BeginForm("Index", "Admin", FormMethod.Get))
+{
+    <p>
+        Tìm: @Html.TextBox("searchString")
+        <input type="submit" value="Tìm" />
+        @Html.ActionLink("Thêm sản phẩm", "Create")
+    </p>
+}
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>ID</th>
+        <th>Tên</th>
+        <th>Giá</th>
+        <th>Số lượng</th>
+        <th>Chức năng</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.MaSanPham</td>
+            <td>@item.TenSanPham</td>
+            <td>@item.Gia</td>
+            <td>@item.SoLuong</td>
+            <td>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.MaSanPham }) |
+                @Html.ActionLink("Xóa", "Delete", new { id = item.MaSanPham })
+            </td>
+        </tr>
+    }
+</table>
