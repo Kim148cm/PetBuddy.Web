@@ -26,5 +26,6 @@ namespace PetBuddy.Web.Controllers
 
             return View();
         }
+
     }
 }
